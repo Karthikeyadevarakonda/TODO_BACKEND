@@ -11,12 +11,12 @@ app.use(cors())
 const {Pool} = pkg;
 
 const pool = new Pool({
-   user:'postgres',
-   host:'localhost',
-   database:'TodoDb',
-   password:'karthik8688',
-   port:5432,
-})
+  user: process.env.PGUSER,
+  host: process.env.PGHOST,
+  database: process.env.PGDATABASE,
+  password: process.env.PGPASSWORD,
+  port: process.env.PGPORT
+});
 
 app.get('/',(req,res)=>{
     res.send("THE EXPRESS SERVER IS RUNNING...");
@@ -100,6 +100,8 @@ app.put('/update/:id',async(req,res)=>{
     }
 })
 
-app.listen(5001,()=>{
-    console.log("THE EXPRESS IS RUNNING ON PORT : http://localhost:5001")
-})
+const PORT = process.env.PORT || 5001;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
